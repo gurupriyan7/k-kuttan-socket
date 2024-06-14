@@ -29,16 +29,35 @@ io.on("connection", (socket) => {
   });
 
   // Send message
+  // socket.on("send-message", (data) => {
+  //   const { receiverId } = data;
+  //   console.log(data,"sendMessage",activeUsers);
+  //   const duplicates = activeUsers?.filter((user) => String(user?.userId)  === String(receiverId));
+  //   console.log(duplicates,"duplicates");
+  //   duplicates.forEach((user) => {
+  //     console.log(user,"usersssuuyytt");
+  //     io.to(user?.socketId).emit("receive-message", data);
+  //   });
+  // });
   socket.on("send-message", (data) => {
     const { receiverId } = data;
-    console.log(data,"sendMessage",activeUsers);
-    const duplicates = activeUsers.filter((user) => user?.userId === receiverId);
-    console.log(duplicates,"duplicates");
-    duplicates.forEach((user) => {
-      console.log(user,"usersssuuyytt");
-      io.to(user?.socketId).emit("receive-message", data);
-    });
-  });
+    console.log(data, "sendMessage", activeUsers);
+
+    // Ensure activeUsers is defined and not null
+    if (Array.isArray(activeUsers)) {
+        const duplicates = activeUsers.filter((user) => String(user?.userId) === String(receiverId));
+        console.log(duplicates, "duplicates");
+
+        // Ensure duplicates is an array before using forEach
+        if (Array.isArray(duplicates)) {
+            duplicates.forEach((user) => {
+                console.log(user, "usersssuuyytt");
+                io.to(user?.socketId).emit("receive-message", data);
+            });
+        }
+    }
+});
+
 
   // Handle disconnect
   socket.on("disconnect", () => {
