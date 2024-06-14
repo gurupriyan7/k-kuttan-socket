@@ -32,6 +32,7 @@ io.on("connection", (socket) => {
   socket.on("send-message", (data) => {
     const { receiverId } = data;
     const duplicates = activeUsers.filter((user) => user.userId === receiverId);
+    console.log(data,duplicates,user);
     duplicates.forEach((user) => {
       io.to(user.socketId).emit("receive-message", data);
     });
