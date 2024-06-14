@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
   // });
   socket.on("send-message", (data) => {
     const { receiverId } = data;
-    console.log(data, "sendMessage", activeUsers);
+    console.log(data, "sendMessage", activeUsers,"lk",receiverId);
 
     // Ensure activeUsers is defined and not null
     if (Array.isArray(activeUsers)) {
