@@ -31,10 +31,10 @@ io.on("connection", (socket) => {
   // Send message
   socket.on("send-message", (data) => {
     const { receiverId } = data;
-    console.log(data,user);
+    console.log(data,activeUsers);
     const duplicates = activeUsers.filter((user) => user?.userId === receiverId);
     duplicates.forEach((user) => {
-      io.to(user.socketId).emit("receive-message", data);
+      io.to(user?.socketId).emit("receive-message", data);
     });
   });
 
