@@ -41,22 +41,24 @@ io.on("connection", (socket) => {
   // });
   socket.on("send-message", (data) => {
     const { recieverId } = data;
-    console.log(data,"data,data,data");
+    console.log(data, "data,data,data", activeUsers);
 
     // Ensure activeUsers is defined and not null
     if (Array.isArray(activeUsers)) {
-        const duplicates = activeUsers.filter((user) => String(user?.userId) === String(recieverId));
+      const duplicates = activeUsers.filter(
+        (user) => String(user?.userId) === String(recieverId)
+      );
+      console.log(duplicates, "dupllicatesss");
 
-        // Ensure duplicates is an array before using forEach
-        if (Array.isArray(duplicates)) {
-            duplicates.forEach((user) => {
-                console.log(user, "usersssuuyytt");
-                io.to(user?.socketId).emit("receive-message", data);
-            });
-        }
+      // Ensure duplicates is an array before using forEach
+      if (Array.isArray(duplicates)) {
+        duplicates.forEach((user) => {
+          console.log(user, "usersssuuyytt");
+          io.to(user?.socketId).emit("receive-message", data);
+        });
+      }
     }
-});
-
+  });
 
   // Handle disconnect
   socket.on("disconnect", () => {
