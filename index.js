@@ -40,14 +40,21 @@ io.on("connection", (socket) => {
   //   });
   // });
   socket.on("send-message", (data) => {
-    const { recieverId } = data;
+    const { recieverId, isRoom = false, senderId } = data;
     console.log(data, "data,data,data", activeUsers);
 
     // Ensure activeUsers is defined and not null
     if (Array.isArray(activeUsers)) {
-      const duplicates = activeUsers.filter(
-        (user) => String(user?.userId) === String(recieverId)
-      );
+      let duplicates = [];
+      if (isRoom) {
+        duplicates = activeUsers?.filter(
+          (user) => String(user?.userId) !== String(senderId)
+        );
+      } else {
+        duplicates = activeUsers?.filter(
+          (user) => String(user?.userId) === String(recieverId)
+        );
+      }
       console.log(duplicates, "dupllicatesss");
 
       // Ensure duplicates is an array before using forEach
