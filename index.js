@@ -7,7 +7,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: ["http://localhost:3000", "https://kambikuttapan.in"]
+    origin: ["http://localhost:3000", "https://kambikuttapan.in", "https://www.kambikuttapan.in"]
   }
 });
 
